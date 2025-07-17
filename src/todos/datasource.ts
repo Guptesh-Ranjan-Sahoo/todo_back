@@ -8,9 +8,9 @@ export default new DataSource({
   host: 'localhost',
   port: 5432,
   username: 'postgres',
-  password: 'Champion,1',
-  database: 'todo_db',
-  synchronize: false, // Set to false for production
+  password: 'Goodera@123',
+  database: 'todo',
+  synchronize: true, // Set to false for production
   entities: ['src/todos/todo.entity.ts'],
   migrations: ['src/migrations/**/*.ts'],
   

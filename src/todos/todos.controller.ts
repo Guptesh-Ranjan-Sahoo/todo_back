@@ -1,11 +1,32 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Query } from '@nestjs/common';
 import { TodosService } from './todos.service';
-import { Todo } from './todo.entity';
+import { Todo, TodoStatus } from './todo.entity';
 
 @Controller('todos')
 export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 
+   // 🔍 GET /todos/search?title=buy
+   @Get('search')
+   searchByTitle(@Query('title') title: string): Promise<Todo[]> {
+     return this.todosService.searchByTitle(title);
+   }
+ 
+   // 📅 GET /todos/sort?by=createdAt&order=DESC
+   // or    /todos/sort?by=updatedAt&order=ASC
+   @Get('sort')
+   sortBy(
+     @Query('by') sortBy: 'createdAt' | 'updatedAt',
+     @Query('order') order: 'ASC' | 'DESC' = 'ASC',
+   ): Promise<Todo[]> {
+     return this.todosService.sortByField(sortBy, order);
+   }
+ 
+   // ✅ GET /todos/filter?status=Todo or status=Done
+   @Get('filter')
+   filterByStatus(@Query('status') status: TodoStatus): Promise<Todo[]> {
+     return this.todosService.filterByStatus(status);
+   }  
   @Get()
   findAll(): Promise<Todo[]> {
     return this.todosService.findAll();
@@ -30,4 +51,5 @@ export class TodosController {
   remove(@Param('id') id: number): Promise<void> {
     return this.todosService.remove(id);
   }
+
 }
