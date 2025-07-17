@@ -10,7 +10,7 @@ export default new DataSource({
   username: 'postgres',
   password: 'Goodera@123',
   database: 'todo',
-  synchronize: true, // Set to false for production
+  synchronize: false, // Set to false for production
   entities: ['src/todos/todo.entity.ts'],
   migrations: ['src/migrations/**/*.ts'],
   
